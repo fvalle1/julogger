@@ -1,6 +1,7 @@
 using Pages
 using HTTP
 using JSON
+using Dates
 
 Endpoint("/hello") do request::HTTP.Request
 "Hello world"
@@ -19,7 +20,8 @@ Endpoint("/echo",POST) do request::HTTP.Request
         data = String(request.body)
         open("logfile.txt","a") do io
 		println("Parameters: $(data)")
-		println(io, data)
+		print(io, data)
+        println(io, Dates.format(now(), " dd/mm/yyyy HH:MM"))
         end
         response = JSON.json(Dict(:data => data))
 end
@@ -30,7 +32,8 @@ end
 
 open("logfile.txt", "r") do io
     a = readlines(io)
-    print([parse(Int,x[1]) for x in a])
+    # print([parse(Int,x[1]) for x in a])
+    print(a)
 end
 
 @async Pages.start(8000);
