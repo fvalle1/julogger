@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<h1>Julia logger</h1>
+<p>Write something and send to a logfile </p>
+
+<input type="text" placeholder="POST data" id="postData" value="Hello!"><br>
+    <button type="button" onclick="post()">LOG</button><br><br>
+
+<div id="postResponse"></div><br><br>
+
+<script>
+    var echoPath = window.location.href+"echo"
+
+    function post() {
+        var postData = document.getElementById("postData").value
+        console.log(postData)
+        fetch(echoPath, {
+            method: "post",
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: postData
+        })
+        .then(res => res.json())
+        .then(function (data) {
+            document.getElementById("postResponse").innerHTML = "POST request succeeded with JSON response: "+JSON.stringify(data);
+        })
+        .catch(function (error) {
+            document.getElementById("postResponse").innerHTML = "POST request failed: "+JSON.stringify(error);
+        });
+    }
+
+    function get() {
+        var getData = document.getElementById("getData").value
+        console.log(postData)
+        fetch(echoPath+getData, {
+            method: "get",
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+        })
+        .then(res => res.json())
+        .then(function (data) {
+            document.getElementById("getResponse").innerHTML = "GET request succeeded with JSON response: "+JSON.stringify(data);
+        })
+        .catch(function (error) {
+            document.getElementById("getResponse").innerHTML = "GET request failed: "+JSON.stringify(error);
+        });
+    }
+
+</script>
