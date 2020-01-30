@@ -1,8 +1,15 @@
 # Run
 
 ```bash
-julia -i webserver.jl
+julia  webserver.jl
 ```
+
+# Requirements
+
+```bash
+julia requirements.jl
+```
+
 
 # Webpage
 
