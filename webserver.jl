@@ -21,9 +21,9 @@ Endpoint("/echo",POST) do request::HTTP.Request
         open("logfile.txt","a") do io
 		println("Parameters: $(data)")
 		print(io, data)
-        println(io, Dates.format(now(), " dd/mm/yyyy HH:MM"))
+        println(io, Dates.format(now(), " dd/mm/yyyy HH:MM:ss"))
         end
-        response = JSON.json(Dict(:data => data))
+        response = JSON.json(Dict(:data => data, "time" => Dates.format(now(), " dd/mm/yyyy HH:MM:ss")))
 end
 
 Endpoint("/") do request::HTTP.Request
@@ -36,4 +36,5 @@ open("logfile.txt", "r") do io
     print(a)
 end
 
-@async Pages.start(8000);
+#@async Pages.start(8000);
+Pages.start(8000);
